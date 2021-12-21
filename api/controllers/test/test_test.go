@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateProductNoError(t *testing.T) {
+func TestTest(t *testing.T) {
 	response := httptest.NewRecorder()
 	c, _ := gin.CreateTestContext(response)
 	c.Request, _ = http.NewRequest(
@@ -23,5 +23,5 @@ func TestCreateProductNoError(t *testing.T) {
 
 	// Assert ---
 	assert.EqualValues(t, http.StatusOK, response.Code)
-
+	assert.Equal(t, "Test!", response.Body.String())
 }

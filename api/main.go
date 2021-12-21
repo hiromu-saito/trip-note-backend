@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/hirom-saito/trip-note-backend/server"
+	"github.com/hiromu-saito/trip-note-backend/server"
 )
 
 func main() {

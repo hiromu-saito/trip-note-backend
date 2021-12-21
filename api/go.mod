@@ -1,4 +1,4 @@
-module github.com/hirom-saito/trip-note-backend
+module github.com/hiromu-saito/trip-note-backend
 
 go 1.17
 
