@@ -11,7 +11,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - ./api:/go/src/github.com/hiromu-saito/trip-note-backend/api
+      - ./:/go/src/github.com/hiromu-saito/trip-note-backend
     environment:
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
