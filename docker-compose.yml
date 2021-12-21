@@ -1,0 +1,32 @@
+version: '3'
+ 
+services:
+  api:
+    build:
+      context: .
+      dockerfile: "./docker/golang/Dockerfile"
+    ports:
+      - "8080:8080"
+    container_name: api
+    depends_on:
+      - mysql
+    volumes:
+      - ./api:/go/src/github.com/hiromu-saito/trip-note-backend/api
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: trip-note
+    tty: true
+
+  mysql:
+    image: mysql:5.7.22
+    environment:
+        MYSQL_ROOT_PASSWORD: admin
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: admin
+        MYSQL_DATABASE: trip-note
+    ports:
+      - "3306:3306"
+    container_name: mysql
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
