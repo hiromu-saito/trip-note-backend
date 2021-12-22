@@ -15,7 +15,7 @@ jobs:
       - checkout
       - run: "test start!"
       - run : pwd
-      - run : ls
+      - run : ls -la ./api
       - run : cd api
       - run : go get 
       - run: go test ./...
