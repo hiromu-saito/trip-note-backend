@@ -7,7 +7,7 @@ jobs:
     - image: golang:1.17.5-alpine3.15
     working_directory: /go/src/github.com/hiromu-saito/trip-note-backend
     environment:
-      GOPATH: /
+      GOPATH: /api
       GOCACHE: /.cache/go-build
       GO111MODULE: "on"
 
