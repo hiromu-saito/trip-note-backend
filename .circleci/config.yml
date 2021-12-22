@@ -7,7 +7,7 @@ jobs:
     - image: golang:1.17.5-alpine3.15
     working_directory: /go/src/github.com/hiromu-saito/trip-note-backend
     environment:
-      GOPATH: /api
+      GOPATH: /
       GOCACHE: /.cache/go-build
       GO111MODULE: "on"
 
@@ -17,6 +17,7 @@ jobs:
       - run : pwd
       - run : ls -la ./api
       - run : cd api
+      - run : ls -la 
       - run : go get 
       - run: go test ./...
 
