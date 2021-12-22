@@ -8,8 +8,6 @@ jobs:
     working_directory: /go/src/github.com/hiromu-saito/trip-note-backend
     environment:
       GOPATH: /
-      GOCACHE: /.cache/go-build
-      GO111MODULE: "on"
 
     steps:
       - checkout
