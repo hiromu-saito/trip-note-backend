@@ -13,11 +13,7 @@ jobs:
 
     steps:
       - checkout
-      - run: "test start!"
-      - run : pwd
-      - run : ls -la ./api
-      - run : cd api
-      - run : ls -la 
+      - run: apk add --no-cache alpine-sdk build-base
       - run : 
           command: go get
           name: go get
