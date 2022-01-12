@@ -3,22 +3,25 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: golang:1.17.5-alpine3.15
-    working_directory: /go/src/github.com/hiromu-saito/trip-note-backend/api
+    - image: golang:1.17.5-alpine3.15
+    working_directory: /go/src/github.com/hiromu-saito/trip-note-backend
     environment:
       GOPATH: /
 
     steps:
       - checkout
       - run: apk add --no-cache alpine-sdk build-base
-      - run:
+      - run : 
           command: go get
           name: go get
+          working_directory: /go/src/github.com/hiromu-saito/trip-note-backend/api 
       - run:
           command: go test ./...
+          working_directory: /go/src/github.com/hiromu-saito/trip-note-backend/api 
 
 workflows:
   version: 2
   test:
     jobs:
       - test
+  
