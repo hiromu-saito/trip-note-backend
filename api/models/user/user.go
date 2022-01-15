@@ -5,9 +5,9 @@ import (
 )
 
 type User struct {
-	Id       int
-	Email    string
-	Password []byte
+	Id       int    `db:"id"`
+	Email    string `db:"email"`
+	Password []byte `db:"password"`
 }
 
 const userInsert = `
@@ -21,12 +21,15 @@ select
     when max(id) is null then 1
     else max(id)+1
   end
- ,?
- ,?
+ ,:email
+ ,:password
 from
     users;
 `
 
-func Insert(user User, tx sqlx.Tx) {
-	tx.MustExec(userInsert, user.Email, user.Password)
+func Insert(user User, tx sqlx.Tx) error {
+	if _, err := tx.NamedExec(userInsert, user); err != nil {
+		return err
+	}
+	return nil
 }
