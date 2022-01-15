@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -21,7 +22,7 @@ var (
 )
 
 func init() {
-	fmt.Println("database setup")
+	log.Println("database setup")
 	connection, err := sqlx.Open("mysql", datasourceName)
 
 	if err != nil {
