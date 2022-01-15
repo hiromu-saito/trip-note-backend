@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 create table if not exists `trip-note`.`memories` (
-    id int primary key comment '思い出ID'
+    id int primary key comment 'ID'
   , user_id int not null comment 'ユーザID'
   , hotel_name varchar(30) not null comment 'ホテル名称'
   , hotel_image varchar(100) not null comment 'ホテル写真'
