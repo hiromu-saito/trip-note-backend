@@ -1,7 +1,9 @@
 package database
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -18,12 +20,21 @@ var (
 	Db             *sqlx.DB
 )
 
-func Connect() {
-	// GORMセット
-	fmt.Println(datasourceName)
+func init() {
+	fmt.Println("database setup")
 	connection, err := sqlx.Open("mysql", datasourceName)
+
 	if err != nil {
 		panic("Could not connect to the database")
 	}
 	Db = connection
+}
+
+func ReadSqlFile(path string) (string, error) {
+	content, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	b := bytes.NewBuffer(content)
+	return b.String(), nil
 }
