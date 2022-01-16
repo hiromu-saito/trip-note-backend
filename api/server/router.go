@@ -11,6 +11,7 @@ func mapUrls() {
 
 	//auth
 	router.POST("/register", auth.Register)
+	router.POST("/login", auth.Login)
 
 	// memory
 	router.GET("/memory", memory.GetMemories)

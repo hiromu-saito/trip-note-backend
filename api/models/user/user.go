@@ -77,6 +77,7 @@ func SelectById(id int) (User, error) {
 func SelectByEmail(email string) (User, error) {
 	var user User
 	if err := database.Db.Get(&user, selectByEmailSql, email); err != nil {
+		log.Printf("user SelectByEmail error:%s\n", err)
 		return user, err
 	}
 	return user, nil
