@@ -15,4 +15,5 @@ func mapUrls() {
 	// memory
 	router.GET("/memory", memory.GetMemories)
 	router.PUT("/memory/:id", memory.UpdateMemories)
+	router.DELETE("/memory/:id", memory.DeleteMemories)
 }

@@ -85,3 +85,25 @@ func InsertMemories(c *gin.Context) {
 	}
 	c.Status(http.StatusOK)
 }
+
+func DeleteMemories(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		apiErr := utility.ApiErr{
+			Message: err.Error(),
+			Status:  http.StatusBadRequest,
+		}
+		c.JSON(apiErr.Status, apiErr)
+		return
+	}
+
+	if err := memory.Delete(id); err != nil {
+		apiErr := utility.ApiErr{
+			Message: err.Error(),
+			Status:  http.StatusBadRequest,
+		}
+		c.JSON(apiErr.Status, apiErr)
+		return
+	}
+	c.Status(http.StatusOK)
+}
