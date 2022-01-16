@@ -29,6 +29,15 @@ from
     users;
 `
 
+const selectById = `
+select
+	*
+from
+	users
+where
+	id = ?
+`
+
 func Insert(user User) error {
 	tx, err := database.Db.Beginx()
 	defer tx.Rollback()
@@ -44,4 +53,14 @@ func Insert(user User) error {
 
 	tx.Commit()
 	return nil
+}
+
+func SelectById(id int) (User, error) {
+	db := database.Db
+	var user User
+
+	if err := db.Get(&user, selectById, id); err != nil {
+		return user, err
+	}
+	return user, nil
 }
