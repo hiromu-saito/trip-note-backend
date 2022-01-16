@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hiromu-saito/trip-note-backend/form/request"
 	"github.com/hiromu-saito/trip-note-backend/models/user"
-	"github.com/hiromu-saito/trip-note-backend/utils/errors"
+	"github.com/hiromu-saito/trip-note-backend/utility"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -25,7 +25,7 @@ func Register(c *gin.Context) {
 
 	err := user.Insert(entity)
 	if err != nil {
-		apiErr := errors.ApiErr{
+		apiErr := utility.ApiErr{
 			Message: err.Error(),
 			Status:  http.StatusInternalServerError,
 		}

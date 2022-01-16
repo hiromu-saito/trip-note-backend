@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hiromu-saito/trip-note-backend/form/response"
 	"github.com/hiromu-saito/trip-note-backend/models/memory"
+	"github.com/hiromu-saito/trip-note-backend/utility"
 )
 
 func GetMemories(c *gin.Context) {
@@ -17,7 +18,11 @@ func GetMemories(c *gin.Context) {
 
 	memories, err := memory.SelectByUserId(userId)
 	if err != nil {
-		c.Status(http.StatusBadRequest)
+		apiErr := utility.ApiErr{
+			Message: err.Error(),
+			Status:  http.StatusBadRequest,
+		}
+		c.JSON(apiErr.Status, apiErr)
 		return
 	}
 

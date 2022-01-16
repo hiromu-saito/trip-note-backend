@@ -1,9 +1,7 @@
 package database
 
 import (
-	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -29,13 +27,4 @@ func init() {
 		panic("Could not connect to the database")
 	}
 	Db = connection
-}
-
-func ReadSqlFile(path string) (string, error) {
-	content, err := ioutil.ReadFile(path)
-	if err != nil {
-		return "", err
-	}
-	b := bytes.NewBuffer(content)
-	return b.String(), nil
 }
