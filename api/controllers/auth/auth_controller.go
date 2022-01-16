@@ -1,8 +1,12 @@
 package auth
 
 import (
+	"log"
 	"net/http"
+	"strconv"
+	"time"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/hiromu-saito/trip-note-backend/form/request"
 	"github.com/hiromu-saito/trip-note-backend/models/user"
@@ -33,6 +37,47 @@ func Register(c *gin.Context) {
 		c.JSON(apiErr.Status, apiErr)
 		return
 	}
-
 	c.Status(http.StatusOK)
+}
+
+func Login(c *gin.Context) {
+	var body request.UserRequest
+
+	if err := c.BindJSON(&body); err != nil {
+		log.Printf("bind json error:%s\n", err)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	user, err := user.SelectByEmail(body.Email)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "unRegisterd email",
+		})
+		return
+	}
+
+	if err = bcrypt.CompareHashAndPassword(user.Password, []byte(body.Password)); err != nil {
+		c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "incorrect password",
+		})
+		return
+	}
+
+	claimes := jwt.StandardClaims{
+		Issuer:    strconv.Itoa(int(user.Id)),
+		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+	}
+
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claimes)
+	token, err := jwtToken.SignedString([]byte("secret"))
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		return
+	}
+
+	c.SetCookie("jwt", token, time.Now().Hour(), "/", "localhost", false, true)
+	c.JSON(http.StatusOK, map[string]string{
+		"message": "success",
+	})
 }

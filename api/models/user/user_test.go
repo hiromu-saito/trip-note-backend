@@ -41,3 +41,15 @@ func TestSelectById(t *testing.T) {
 	assert.Equal(t, user.Email, "hoge@example.com")
 	assert.Equal(t, user.Password, []byte("12345"))
 }
+
+func TestSelectByEmail(t *testing.T) {
+	utility.DataSetupBySqlFile("/go/src/github.com/hiromu-saito/trip-note-backend/testdata/models/user/selectByEmail.sql")
+
+	user, err := SelectByEmail("hoga@example.com")
+	if err != nil {
+		log.Fatal(err)
+	}
+	assert.Equal(t, 2, user.Id)
+	assert.Equal(t, "hoga@example.com", user.Email)
+	assert.Equal(t, []byte("54321"), user.Password)
+}
