@@ -9,7 +9,7 @@ import (
 )
 
 func TestInsert(t *testing.T) {
-	utility.DataSetupBySqlFile("/go/src/testdata/models/user/insert.sql")
+	utility.DataSetupBySqlFile("/go/src/github.com/hiromu-saito/trip-note-backend/testdata/models/user/insert.sql")
 
 	var user User
 	database.Db.Get(&user, "select * from users")
