@@ -15,6 +15,7 @@ func Register(c *gin.Context) {
 
 	if err := c.BindJSON(&body); err != nil {
 		c.Status(http.StatusBadRequest)
+		return
 	}
 	//passwordのhash化
 	password, _ := bcrypt.GenerateFromPassword([]byte(body.Password), 14)
