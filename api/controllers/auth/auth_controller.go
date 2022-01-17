@@ -107,3 +107,8 @@ func Authentication(c *gin.Context) (userId int, err error) {
 	}
 	return
 }
+
+func Logout(c *gin.Context) {
+	c.SetCookie("jwt", "", 0, "/", "localhost", false, true)
+	c.Status(http.StatusOK)
+}
