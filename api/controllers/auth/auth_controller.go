@@ -14,6 +14,10 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+type Claimes struct {
+	jwt.StandardClaims
+}
+
 func Register(c *gin.Context) {
 	var body request.UserRequest
 
@@ -80,4 +84,26 @@ func Login(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]string{
 		"message": "success",
 	})
+}
+
+func Authentication(c *gin.Context) (userId int, err error) {
+	cookie, err := c.Cookie("jwt")
+	if err != nil {
+		return
+	}
+	token, err := jwt.ParseWithClaims(cookie, &Claimes{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte("secret"), nil
+	})
+	if err != nil || !token.Valid {
+		return
+	}
+
+	claimes := token.Claims.(*Claimes)
+	userId, _ = strconv.Atoi(claimes.Issuer)
+
+	_, err = user.SelectById(userId)
+	if err != nil {
+		return
+	}
+	return
 }

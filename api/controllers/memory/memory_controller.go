@@ -1,12 +1,12 @@
 package memory
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hiromu-saito/trip-note-backend/controllers/auth"
 	"github.com/hiromu-saito/trip-note-backend/form/request"
 	"github.com/hiromu-saito/trip-note-backend/form/response"
 	"github.com/hiromu-saito/trip-note-backend/models/memory"
@@ -14,18 +14,15 @@ import (
 )
 
 func GetMemories(c *gin.Context) {
-
-	//TODO jewtからユーザーIDを取得
-	userId := 1
-	fmt.Println(userId)
+	userId, err := auth.Authentication(c)
+	if err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
 
 	memories, err := memory.SelectByUserId(userId)
 	if err != nil {
-		apiErr := utility.ApiErr{
-			Message: err.Error(),
-			Status:  http.StatusBadRequest,
-		}
-		c.JSON(apiErr.Status, apiErr)
+		c.Status(http.StatusInternalServerError)
 		return
 	}
 
@@ -37,6 +34,12 @@ func GetMemories(c *gin.Context) {
 }
 
 func UpdateMemories(c *gin.Context) {
+	_, err := auth.Authentication(c)
+	if err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
+
 	var body request.MemoryRequest
 	if err := c.BindJSON(&body); err != nil {
 		log.Printf("bind json error:%s", err)
@@ -72,6 +75,12 @@ func UpdateMemories(c *gin.Context) {
 }
 
 func InsertMemories(c *gin.Context) {
+	_, err := auth.Authentication(c)
+	if err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
+
 	var body request.MemoryRequest
 
 	if err := c.BindJSON(&body); err != nil {
@@ -87,6 +96,12 @@ func InsertMemories(c *gin.Context) {
 }
 
 func DeleteMemories(c *gin.Context) {
+	_, err := auth.Authentication(c)
+	if err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		apiErr := utility.ApiErr{
