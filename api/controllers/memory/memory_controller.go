@@ -62,6 +62,8 @@ func UpdateMemories(c *gin.Context) {
 	}
 
 	body.Id = id
+
+	log.Println("body", body)
 	if err := memory.Update(body.ToMemory()); err != nil {
 		apiErr := utility.ApiErr{
 			Message: err.Error(),
@@ -89,6 +91,9 @@ func InsertMemories(c *gin.Context) {
 		c.Status(http.StatusBadRequest)
 		return
 	}
+
+	log.Println("body", body)
+
 	body.UserId = userId
 	if err := memory.Insert(body.ToMemory()); err != nil {
 		c.Status(http.StatusBadRequest)

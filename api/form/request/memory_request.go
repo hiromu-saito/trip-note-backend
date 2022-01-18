@@ -1,7 +1,6 @@
 package request
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/hiromu-saito/trip-note-backend/models/memory"
@@ -18,9 +17,9 @@ type MemoryRequest struct {
 }
 
 func (request *MemoryRequest) ToMemory() memory.Memory {
-	fmt.Println("date:", request.AccomodationDate)
 	t, _ := time.Parse("2006-01-02", request.AccomodationDate)
 	return memory.Memory{
+		Id:               request.Id,
 		UserId:           request.UserId,
 		HotelName:        request.HotelName,
 		HotelImage:       request.HotelImage,

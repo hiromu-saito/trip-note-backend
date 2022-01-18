@@ -34,6 +34,8 @@ update
 set
     impression         = :impression
 	 ,accommodation_date = :accommodation_date
+where
+	id = :id
 `
 
 const insertSql = `
@@ -78,11 +80,16 @@ func Update(memory Memory) error {
 		log.Printf("transaction begin error%s", err)
 		return err
 	}
+
+	// result, err := tx.NamedExec(updateSql, &memory)
 	_, err = tx.NamedExec(updateSql, &memory)
+	// r, _ := result.RowsAffected()
+	// log.Println("rows:", r)
 	if err != nil {
 		log.Printf("memory update Error:%s", err)
 		return err
 	}
+
 	tx.Commit()
 	return nil
 }

@@ -23,7 +23,7 @@ type jsonTime struct {
 
 // formatを設定
 func (j jsonTime) format() string {
-	return j.Time.Format("2006/01/02")
+	return j.Time.Format("2006-01-02")
 }
 
 // MarshalJSON() の実装
