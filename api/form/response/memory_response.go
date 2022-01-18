@@ -10,7 +10,7 @@ type MemoryResponse struct {
 	Id               int      `json:"id"`
 	UserId           int      `json:"userId"`
 	HotelName        string   `json:"hotelName"`
-	HotelImage       string   `json:"hotel_image"`
+	HotelImage       string   `json:"hotelImage"`
 	Impression       string   `json:"impression"`
 	AccomodationDate jsonTime `json:"accommodationDate"`
 	DetailUrl        string   `json:"detailUrl"`

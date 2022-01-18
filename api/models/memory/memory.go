@@ -37,7 +37,7 @@ set
 `
 
 const insertSql = `
-INSERT INTO memories values (
+INSERT INTO memories  (
 	id
  ,user_id
  ,hotel_name
@@ -88,6 +88,7 @@ func Update(memory Memory) error {
 }
 
 func Insert(memory Memory) error {
+	log.Println("memory", memory)
 	tx, err := database.Db.Beginx()
 	defer tx.Rollback()
 	if err != nil {

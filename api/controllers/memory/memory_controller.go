@@ -75,8 +75,9 @@ func UpdateMemories(c *gin.Context) {
 }
 
 func InsertMemories(c *gin.Context) {
-	_, err := auth.Authentication(c)
+	userId, err := auth.Authentication(c)
 	if err != nil {
+		log.Printf("auth error:%s", err)
 		c.Status(http.StatusUnauthorized)
 		return
 	}
@@ -84,10 +85,11 @@ func InsertMemories(c *gin.Context) {
 	var body request.MemoryRequest
 
 	if err := c.BindJSON(&body); err != nil {
+		log.Printf("bind json error:%s", err)
 		c.Status(http.StatusBadRequest)
 		return
 	}
-
+	body.UserId = userId
 	if err := memory.Insert(body.ToMemory()); err != nil {
 		c.Status(http.StatusBadRequest)
 		return

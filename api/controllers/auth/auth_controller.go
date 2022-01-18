@@ -22,6 +22,7 @@ func Register(c *gin.Context) {
 	var body request.UserRequest
 
 	if err := c.BindJSON(&body); err != nil {
+		log.Printf("bind json error:%s", err)
 		c.Status(http.StatusBadRequest)
 		return
 	}
@@ -80,7 +81,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("jwt", token, time.Now().Hour(), "/", "localhost", false, true)
+	c.SetCookie("jwt", token, 60*60, "/", "localhost", false, true)
 	c.JSON(http.StatusOK, map[string]string{
 		"message": "success",
 	})

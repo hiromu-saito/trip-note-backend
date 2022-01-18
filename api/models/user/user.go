@@ -57,6 +57,7 @@ func Insert(user User) error {
 
 	_, err = tx.NamedExec(userInsertSql, user)
 	if err != nil {
+		log.Printf("user insert error%s", err)
 		return err
 	}
 
