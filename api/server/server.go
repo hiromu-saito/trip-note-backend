@@ -17,7 +17,8 @@ func StartApp() *gin.Engine {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
-			"http://localhost:8081",
+			// "http://localhost:8081",
+			"https://trip-note-1bdb5.web.app",
 		},
 		AllowMethods: []string{
 			"POST",
