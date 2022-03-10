@@ -73,7 +73,6 @@ func Login(c *gin.Context) {
 		Issuer:    strconv.Itoa(int(user.Id)),
 		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
 	}
-
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claimes)
 	token, err := jwtToken.SignedString([]byte("secret"))
 	if err != nil {
@@ -81,7 +80,8 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("jwt", token, 60*60, "/", "localhost", false, true)
+	c.SetSameSite(http.SameSiteNoneMode)
+	c.SetCookie("jwt", token, 60*60, "/", "", true, true)
 	c.JSON(http.StatusOK, map[string]string{
 		"message": "success",
 	})
@@ -90,6 +90,7 @@ func Login(c *gin.Context) {
 func Authentication(c *gin.Context) (userId int, err error) {
 	cookie, err := c.Cookie("jwt")
 	if err != nil {
+		log.Println("cookie not found.err:", err)
 		return
 	}
 	token, err := jwt.ParseWithClaims(cookie, &Claimes{}, func(t *jwt.Token) (interface{}, error) {
@@ -110,6 +111,6 @@ func Authentication(c *gin.Context) (userId int, err error) {
 }
 
 func Logout(c *gin.Context) {
-	c.SetCookie("jwt", "", 0, "/", "localhost", false, true)
+	c.SetCookie("jwt", "", 0, "/", "", false, true)
 	c.Status(http.StatusOK)
 }
