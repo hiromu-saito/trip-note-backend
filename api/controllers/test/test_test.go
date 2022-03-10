@@ -14,7 +14,7 @@ func TestTest(t *testing.T) {
 	c, _ := gin.CreateTestContext(response)
 	c.Request, _ = http.NewRequest(
 		http.MethodGet,
-		"/test",
+		"/",
 		nil,
 	)
 

@@ -7,7 +7,7 @@ import (
 )
 
 func mapUrls() {
-	router.GET("/test", test.Test)
+	router.GET("/", test.Test)
 
 	//auth
 	router.POST("/register", auth.Register)
