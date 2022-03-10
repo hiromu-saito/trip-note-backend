@@ -16,6 +16,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
       MYSQL_DATABASE: trip-note
+      MYSQL_HOST: mysql
     tty: true
 
   mysql:
