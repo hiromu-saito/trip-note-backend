@@ -8,5 +8,5 @@ import (
 
 func main() {
 	log.Println("Start App...")
-	server.StartApp().Run(":18080")
+	server.StartApp().Run()
 }
